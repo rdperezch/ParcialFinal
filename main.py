@@ -44,20 +44,6 @@ class RootCalculadora(Screen, GridLayout):
 		    self.answer_text.text = express[:-1]
 
 
-    def borrar(self, express):
-        if express:
-            self.answer_text.text = express[:-1]
-
-    def calcular(self, express):
-        if not express: return
-
-        try:
-            self.answer_text.text = str(eval(express))
-        except Exception:
-            self.answer_text.text = 'error'
-
-    pass
-
 
     def calcular(self, express):
 	    try:
