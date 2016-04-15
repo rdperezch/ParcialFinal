@@ -1,0 +1,184 @@
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:import COLOR kivy.utils.get_color_from_hex
+#:set RED "#F94A69"
+#:set GREEN "#06A5AB"
+#:set LBLUE "#63D1F4"
+
+
+<WrappedLabel@Label>:
+    size_hint_y: None
+    height: self.texture_size[1] + (self.texture_size[1]/2)
+    markup: True
+
+<Button>:
+    font_size: min(self.height, self.width) / 4
+    bold: True
+    background_color: COLOR("#0066BA")
+    border: (2, 2, 2, 2)
+
+<BotonAtras@Button>:  #Boton atras REGRESA A TU PAGINA ANTERIOR
+	text: 'Atras'
+	background_color: 130, 0, 0, 0.5
+	color: (0,0,0,1)
+	size_hint:(0.250, 0.1)
+	pos_hint:{'center_x': .2,'center_y': .1}
+
+
+
+
+ScreenManager:
+	transition: SlideTransition()
+	Intro:
+	    name: "intro"
+	RootCalculadora:
+	    name: "root_calculadora"
+	AboutScreen:
+        name: "about"
+
+<Intro>:
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: root.width * .02, root.height * .02
+        spacing: min(root.width, root.height) * .02
+
+        WrappedLabel:
+            text: "[b] Simply Calculator[/b]"
+            font_size: min(root.height, root.width) / 10
+
+        Button:
+            text:" Calculadora.."
+            on_press: app.root.current = "root_calculadora"
+            background_color: COLOR(GREEN)
+
+        Button:
+            text:"Acerca de la App.."
+            font_size: min(root.height, root.width) / 10
+            on_press: app.root.current = "about"
+            background_color: COLOR(RED)
+
+
+<RootCalculadora>:
+    id: calculator
+    answer_text: answer_text
+    BoxLayout:
+        orientation: "vertical"
+        padding: root.width * .02, root.height * .02
+        spacing: 10
+        WrappedLabel:
+            id: name_text
+            text: "Calculadora"
+            font_size: min(root.height, root.width) / 10
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            WrappedLabel:
+                id:answer_text
+                text: ""
+                font_size: min(root.height, root.width) / 10
+            Button:
+                text: "[b]Atras[/b]"
+                markup: True
+                size_hint: .3, None
+                on_press: app.root.current = "intro"
+            Button:
+                id: clear_btn
+                text: "[b]Clear[/b]"
+                markup: True
+                size_hint: .3, None
+                height: name_text.texture_size[1]
+                on_release: answer_text.text = ""
+        GridLayout:
+            rows: 4
+            cols: 4
+
+            Button:
+                text: '1'
+                on_press: answer_text.text += self.text
+                background_color: COLOR(LBLUE)
+
+            Button:
+                text: '2'
+                on_press: answer_text.text += self.text
+                background_color: COLOR(LBLUE)
+
+            Button:
+                text: '3'
+                on_press: answer_text.text += self.text
+                background_color: COLOR(LBLUE)
+
+            BubbleButton:
+                text: '+'
+                on_press: answer_text.text += self.text
+                background_color: COLOR(LBLUE)
+
+            Button:
+                text: '4'
+                on_press: answer_text.text += self.text
+                background_color: COLOR(LBLUE)
+
+            Button:
+                text: '5'
+                on_press: answer_text.text += self.text
+                background_color: COLOR(LBLUE)
+
+            Button:
+                text: '6'
+                on_press: answer_text.text += self.text
+                background_color: COLOR(LBLUE)
+
+            BubbleButton:
+                text: '-'
+                on_press: answer_text.text += self.text
+
+            Button:
+                text: '7'
+                on_press: answer_text.text += self.text
+                background_color: COLOR(LBLUE)
+
+            Button:
+                text: '8'
+                on_press: answer_text.text += self.text
+                background_color: COLOR(LBLUE)
+
+            Button:
+                text: '9'
+                on_press: answer_text.text += self.text
+                background_color: COLOR(LBLUE)
+
+            BubbleButton:
+                text: '*'
+                on_press: answer_text.text += self.text
+
+            BubbleButton:
+                text: 'C'
+                on_press: calculator.borrar(answer_text.text)
+                background_color: COLOR(RED)
+
+            Button:
+                text: '0'
+                on_press: answer_text.text += self.text
+                background_color: COLOR(LBLUE)
+
+            BubbleButton:
+                text: '/'
+                on_press: answer_text.text += self.text
+
+            BubbleButton:
+                text: '='
+                on_press: calculator.calcular(answer_text.text)
+
+<AboutScreen>:
+
+    BoxLayout:
+        padding: root.width * .02, root.height * .02
+        Label:
+            text: root.getText()
+            halign: "center"
+            markup: True
+            font_size: root.height / 20
+            text_size: self.width, None
+            center_y: .5
+
+        BotonAtras:
+            on_press: app.root.current = "intro"
